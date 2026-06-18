@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: financial-assistant
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_BASE_URL
+        value: https://openrouter.ai/api/v1
+      - key: OPENROUTER_LLM_MODEL
+        value: nvidia/nemotron-nano-9b-v2:free
+      - key: EMBEDDING_MODEL
+        value: sentence-transformers/all-MiniLM-L6-v2
+      - key: CHROMA_PERSIST_DIR
+        value: /tmp/chroma_db
+      - key: SAMPLE_DATA_DIR
+        value: data/sample_filings
+      - key: PYTHON_VERSION
+        value: "3.12.0"
